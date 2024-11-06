@@ -1,0 +1,270 @@
+﻿<Window x:Class="DNS.AddOrEditDns"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DNS"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Title="DNS" Height="380" Width="500">
+    <Grid>
+        <Border BorderBrush="#b47fff" Background="#323232" BorderThickness=".5" CornerRadius="20">
+            <Grid>
+                <!-- Title Bar -->
+                <Border Background="#b47fff" Height="35" VerticalAlignment="Top" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" CornerRadius="20,20,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White">DNS</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                            <Button
+                            x:Name="btn_minimize"
+                            HorizontalAlignment="Left"
+                            Background="#00CF00"
+                            ToolTip="Close"
+                            Width="20"
+                                Visibility="Collapsed"
+                            Height="20"
+                            Margin="3,0" MouseEnter="btn_minimize_MouseEnter" MouseLeave="btn_minimize_MouseLeave" Click="btn_minimize_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                            <materialDesign:PackIcon Visibility="{Binding BtnMinimizeVisibility}" Kind="WindowMinimize" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button
+                            x:Name="btn_maximize"
+                            HorizontalAlignment="Left"
+                            Background="Orange"
+                            ToolTip="Close"
+                            Visibility="Collapsed"
+                            Width="20"
+                            Height="20"
+                            Margin="3,0" MouseEnter="btn_maximize_MouseEnter" MouseLeave="btn_maximize_MouseLeave" Click="btn_maximize_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                            <materialDesign:PackIcon  Visibility="{Binding BtnMaximizeVisibility}" Kind="WindowMaximize" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button
+                            HorizontalAlignment="Left"
+                            Background="Red"
+                            x:Name="btn_close"
+                            ToolTip="Close"
+                            Width="20"
+                            Height="20"
+                            Margin="3,0,10,0" MouseEnter="btn_close_MouseEnter" MouseLeave="btn_close_MouseLeave" Click="btn_close_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                            <materialDesign:PackIcon Visibility="{Binding BtnCloseVisibility}" Kind="WindowClose" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <!-- Main Content -->
+                <Grid Margin="0,45,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".5*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width=".5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="1" Grid.RowSpan="3">
+                        <TextBox
+                            Height="50"
+                                x:Name="txt_name"
+                            VerticalAlignment="Top"
+                            Foreground="White"
+                            materialDesign:HintAssist.Hint="Name"
+                            AcceptsReturn="False"
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                            TextWrapping="NoWrap"
+                            VerticalScrollBarVisibility="Auto"
+                        />
+                        <Label Margin="0,20,0,5">Primary DNS</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Height="50"
+                                Width="70"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_pd_1"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingPrimary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_pd_2"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingPrimary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_pd_3"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingPrimary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_pd_4"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingPrimary"
+                            />
+                        </StackPanel>
+
+                        <Label Margin="0,20,0,5">Secondary DNS</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Height="50"
+                                Width="70"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_sd_1"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingSecondary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_sd_2"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingSecondary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_sd_3"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingSecondary"
+                            />
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Bottom">.</Label>
+
+                            <TextBox
+                                TextChanged="TextBox_TextChanged"
+                                HorizontalContentAlignment="Center"
+                                Width="70"
+                                Height="50"
+                                PreviewKeyDown="TextBox_PreviewKeyDown"
+                                x:Name="txt_sd_4"
+                                VerticalAlignment="Top"
+                                Foreground="White"
+                                materialDesign:HintAssist.Hint=""
+                                AcceptsReturn="False"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                TextWrapping="NoWrap"
+                                VerticalScrollBarVisibility="Auto"
+                                PreviewTextInput="NumberValidationTextBox"
+                                DataObject.Pasting="TextBoxPastingSecondary"
+                            />
+                        </StackPanel>
+                        <Button
+                            Width="70"
+                            Content="Save"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}"
+                            ToolTip="Save"
+                            x:Name="btn_save" Click="btn_save_Click"
+                        />
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
